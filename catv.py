@@ -5,11 +5,11 @@ import math
 st.set_page_config(page_title="CATV 現場工程訊號計算器", page_icon="📡", layout="centered")
 
 st.title("📡 YJL 工程訊號計算器")
-st.markdown("簡易計算線上被動元件的損失&多顆TAP串接與儀表逆向回推")
+st.markdown("簡易計算線上被動元件的損失 & 多顆 TAP 串接與儀表逆向回推")
 st.markdown("---")
 
 # 選擇計算模式
-calc_mode = st.radio("選擇計算模式", ["🚀 線上預估 (起使 終端)", "🔍 訊號回推 (儀表量測 回推起點)"], horizontal=True)
+calc_mode = st.radio("選擇計算模式", ["🚀 線上預估 (起點 終端)", "🔍 訊號回推 (儀表量測 回推起點)"], horizontal=True)
 
 st.markdown("---")
 
@@ -108,7 +108,7 @@ if calc_mode == "🚀 線上預估 (起點 終端)":
     if has_passive:
         col_p1, col_p2 = st.columns(2)
         with col_p1:
-            passive_type = st.selectbox("被動元件型號", ["DC2 (兩路)", "DC3 (三路)", "DC8 (兩路特殊)"])
+            passive_type = st.selectbox("被動元件型號", ["DC2 (兩路)", "DC3 (三路)", "DC8 (兩路不平衡)"])
         with col_p2:
             if passive_type == "DC2 (兩路)":
                 passive_port_desc = "3.5dB 埠"
@@ -271,7 +271,7 @@ else:
     b_pass_l, b_pass_h = 0.0, 0.0
     b_p_type, b_p_port = "無", ""
     if back_has_passive:
-        b_p_type = st.selectbox("被動元件型號", ["DC2 (兩路)", "DC3 (三路)", "DC8 (兩路特殊)"], key="back_p_type")
+        b_p_type = st.selectbox("被動元件型號", ["DC2 (兩路)", "DC3 (三路)", "DC8 (兩路不平衡)"], key="back_p_type")
         b_p_port = st.selectbox("埠選擇", ["3.5dB 埠", "7dB 埠"], key="back_p_port")
         b_pass_l, b_pass_h, _ = get_passive_loss(b_p_type, b_p_port)
 
@@ -300,7 +300,6 @@ else:
 
     if measured_low > 0 or measured_high > 0:
         st.markdown("### 📋 現場智能診斷與巡查建議")
-        # 將異常門檻從 5 dB 放寬至 10 dB，避免一般線路微幅誤差就頻繁跳出警告
         if diff_low > 10.0 or diff_high > 10.0:
             st.error(f"⚠️ **【顯著衰減警告】** 推算起點訊號低於設備標準輸出超過 10 dB（低頻落差 {diff_low:.1f} dB / 高頻落差 {diff_high:.1f} dB）。中間段落可能有非預期的較大損耗，建議留意！")
         else:
