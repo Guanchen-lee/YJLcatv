@@ -22,7 +22,7 @@ def get_passive_loss(passive_type, selected_port):
             return 3.5, 3.8, 3.5
         else:
             return 7.0, 7.5, 7.0
-    elif passive_type == "DC8 (兩路特殊)":
+    elif passive_type == "DC8 (兩路不平衡)":
         if "8" in selected_port:
             return 8.0, 8.5, 8.0
         else:
