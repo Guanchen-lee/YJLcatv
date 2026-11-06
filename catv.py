@@ -114,7 +114,7 @@ if calc_mode == "🚀 線上預估 (起點 終端)":
                 passive_port_desc = "3.5dB 埠"
             elif passive_type == "DC3 (三路)":
                 passive_port_desc = st.selectbox("選擇 DC3 輸出埠", ["3.5dB 埠", "7dB 埠 (A)", "7dB 埠 (B)"])
-            elif passive_type == "DC8 (兩路特殊)":
+            elif passive_type == "DC8 (兩路不平衡)":
                 passive_port_desc = st.selectbox("選擇 DC8 輸出埠", ["8dB 埠", "1dB 埠"])
         passive_loss_low, passive_loss_high, passive_up_effect = get_passive_loss(passive_type, passive_port_desc)
 
