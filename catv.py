@@ -5,11 +5,11 @@ import math
 st.set_page_config(page_title="CATV 現場工程訊號計算器", page_icon="📡", layout="centered")
 
 st.title("📡 YJL 工程訊號計算器")
-st.markdown("支援起點設備、主線混用距離、被動元件(DC)、多顆 TAP 智慧串接與儀表逆向回推")
+st.markdown("簡易計算線上被動元件的損失&多顆TAP串接與儀表逆向回推")
 st.markdown("---")
 
 # 選擇計算模式
-calc_mode = st.radio("選擇計算模式", ["🚀 線上預估 (起點 終端)", "🔍 訊號回推 (儀表量測 回推起點)"], horizontal=True)
+calc_mode = st.radio("選擇計算模式", ["🚀 線上預估 (起使 終端)", "🔍 訊號回推 (儀表量測 回推起點)"], horizontal=True)
 
 st.markdown("---")
 
@@ -43,7 +43,7 @@ tap_db_table = {
 }
 
 if calc_mode == "🚀 線上預估 (起點 終端)":
-    st.subheader("1. 選擇起點設備與基準值")
+    st.subheader("1. 選擇主動元件")
     device_type = st.selectbox(
         "設備型號", 
         [
@@ -80,7 +80,7 @@ if calc_mode == "🚀 線上預估 (起點 終端)":
         target_high_freq = st.number_input("目標高頻頻率 (MHz)", value=975.0, step=1.0)
 
     st.markdown("---")
-    st.subheader("2. 主幹線線材與混合距離 (500P3 / 7C)")
+    st.subheader("2. 主幹線線材 (500P3 / 7C)")
     col_c1, col_c2 = st.columns(2)
     with col_c1:
         dist_500 = st.number_input("500P3 同軸幹線距離 (公尺)", value=0.0, step=10.0)
@@ -119,7 +119,7 @@ if calc_mode == "🚀 線上預估 (起點 終端)":
         passive_loss_low, passive_loss_high, passive_up_effect = get_passive_loss(passive_type, passive_port_desc)
 
     st.markdown("---")
-    st.subheader("4. TAP 串接選擇")
+    st.subheader("4. TAP 串接級數選擇")
     num_taps = st.number_input("這條路徑總共經過幾顆 TAP？ (設為 0 則不經過 TAP)", min_value=0, max_value=10, value=0, step=1)
     total_tap_loss_low, total_tap_loss_high = 0.0, 0.0
     final_tap_up_val = orig_up
